@@ -24,9 +24,9 @@ captured; play only inside them. There is exactly one correct first move.
 
 ## Features
 
-- **207 proven problems** in three levels by the length of the main
-  line: Easy (one Black move, 113), Medium (two, 57), Hard (three
-  or more, 37)
+- **298 proven problems** in three levels by the length of the main
+  line: Easy (one Black move, 113), Medium (two, 94), Hard (three
+  or more, 91)
 - **Progress** — solved count per level; a problem counts when solved without
   a hint or the solution
 - **Hint** — two taps: the first marks a correct move with a square, the
@@ -71,6 +71,13 @@ luajit gen/gen_bank.lua 50000 6000 part2.lua 30000 3 big  # hunt longer problems
 luajit gen/merge_bank.lua problems.lua part1.lua part2.lua
 luajit test_verify.lua                                 # re-prove everything
 ```
+
+`merge_bank.lua` rebuilds the bank from scratch. To add problems to a
+released bank without moving the existing ones, use
+`luajit gen/append_bank.lua problems.lua part3.lua ...` instead (1.1.0 added
+its 91 problems from seeds 100000–419999 this way). The search space of small
+corners is finite: later runs keep rediscovering known positions, and about
+one seed in a thousand still gives a new Hard problem.
 
 ## Controls
 
