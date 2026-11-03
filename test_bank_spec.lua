@@ -46,9 +46,27 @@ describe("Problem bank", function()
             local l = math.min(3, p.level)
             per[l] = per[l] + 1
         end
-        assert.is_true(per[1] >= 50, "easy: " .. per[1])
-        assert.is_true(per[2] >= 30, "medium: " .. per[2])
-        assert.is_true(per[3] >= 10, "hard: " .. per[3])
+        assert.are.same({ 113, 94, 91 }, per)
+    end)
+
+    -- Saved progress is keyed by id: a bank update may only append.
+    it("keeps every 1.0 problem, in its place", function()
+        local first = { 27764, 14782, 28983, 28938, 19981 }
+        for i, id in ipairs(first) do assert.are.equal(id, problems[i].id) end
+        local old = 0
+        for _, p in ipairs(problems) do
+            if p.id < 100000 then old = old + 1 end
+        end
+        assert.are.equal(207, old)
+        -- The 1.0 problems come first: every newer one follows them.
+        for i = 1, 207 do assert.is_true(problems[i].id < 100000, "order at " .. i) end
+    end)
+
+    it("keeps the bank small enough for the e-reader", function()
+        local f = assert(io.open(DIR .. "problems.lua", "rb"))
+        local size = f:seek("end")
+        f:close()
+        assert.is_true(size < 100 * 1024, "problems.lua is " .. size .. " bytes")
     end)
 
     it("has unique ids, valid kinds and corner frames", function()

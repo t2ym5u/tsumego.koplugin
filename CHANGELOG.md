@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.1.0] - 2026-11-03
+
+### Added
+- 91 new problems: Medium grows from 57 to 94 and Hard from 37 to 91
+  (298 problems in all). Like the others, every one is generated and proven
+  by the exhaustive life-and-death solver, with exactly one correct first
+  move, and re-proven by the test suite.
+- Your progress is kept: the existing problems stay where they were and the
+  new ones come after them in each level.
+
 ## [1.0.2] - 2026-11-02
 
 ### Changed
