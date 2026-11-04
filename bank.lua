@@ -91,4 +91,14 @@ function Bank.previous(level, current)
     return list[(pos - 2) % #list + 1]
 end
 
+-- True once problems.lua is loaded (for tests).
+function Bank.isLoaded()
+    return problems ~= nil
+end
+
+-- Drops the loaded bank; the next call reads problems.lua again (~2 ms).
+function Bank.release()
+    problems, by_id, by_level = nil, nil, nil
+end
+
 return Bank
