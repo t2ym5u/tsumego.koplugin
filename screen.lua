@@ -380,4 +380,10 @@ function TsumegoScreen:updateStatus(msg)
     self:refreshActionBar()
 end
 
+-- The problem bank is only needed while a game is open: drop it when the
+-- screen closes (the next game reads it again).
+function TsumegoScreen:onCloseWidget()
+    Bank.release()
+end
+
 return TsumegoScreen
