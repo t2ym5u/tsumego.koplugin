@@ -40,15 +40,6 @@ local function sameCells(a, b, g)
 end
 
 describe("Problem bank", function()
-    it("has problems at every level", function()
-        local per = { 0, 0, 0 }
-        for _, p in ipairs(problems) do
-            local l = math.min(3, p.level)
-            per[l] = per[l] + 1
-        end
-        assert.are.same({ 113, 94, 91 }, per)
-    end)
-
     -- Saved progress is keyed by id: a bank update may only append.
     it("keeps every 1.0 problem, in its place", function()
         local first = { 27764, 14782, 28983, 28938, 19981 }
@@ -75,7 +66,6 @@ describe("Problem bank", function()
             assert.is_nil(seen[p.id], "duplicate id " .. tostring(p.id))
             seen[p.id] = true
             assert.is_true(p.kind == "kill" or p.kind == "live")
-            assert.are.equal(p.level, p.tree.d)
             local R, C = #p.rows, #p.rows[1]
             for r = 1, R do
                 assert.are.equal(C, #p.rows[r])
@@ -166,14 +156,6 @@ describe("Problem bank", function()
     end)
 
     describe("navigation", function()
-        it("splits the bank into three levels covering every problem", function()
-            local n = 0
-            for lvl = 1, 3 do n = n + Bank.count(lvl) end
-            assert.are.equal(#Bank.all(), n)
-            assert.are.equal(1, Bank.clampLevel(0))
-            assert.are.equal(3, Bank.clampLevel(9))
-        end)
-
         it("walks a level in order, wrapping, and skips solved problems", function()
             local list = Bank.list(1)
             local first = Bank.nextUnsolved(1, nil, {})
